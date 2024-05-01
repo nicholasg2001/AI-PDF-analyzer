@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "export NODE_OPTIONS='--max-old-space-size=8192' && next dev",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -28,6 +28,7 @@
     "lucide-react": "^0.376.0",
     "next": "14.2.3",
     "next-themes": "^0.3.0",
+    "pdf-parse": "^1.1.1",
     "pg": "^8.11.5",
     "prettier": "^3.2.5",
     "react": "^18.3.1",
