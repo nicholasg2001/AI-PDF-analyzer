@@ -29,7 +29,7 @@ export default function Home() {
           </div>
 
           <p className="max-w-xl mt-1 text-lg text-slate-700 dark:text-slate-200">
-            {!userId && <p>Leverage AI to extract insights from your PDFs</p>}
+            {!userId && <span>Leverage AI to extract insights from your PDFs</span>}
           </p>
 
           <div className="w-full mt-4">
