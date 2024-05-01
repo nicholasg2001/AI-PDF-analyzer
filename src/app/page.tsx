@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     
-    <div className="w-screen min-h-screen bg-gradient-to-r from-sky-100 to-rose-100 dark:bg-gradient-to-r dark:from-black dark:to-gray-800">
+    <div className="w-screen min-h-screen bg-gradient-to-r from-sky-100 to-rose-100 dark:bg-gradient-to-r dark:from-slate-800 dark:to-gray-800">
       <div className="fixed top-4 right-4">
         <ThemeToggle />
         </div>
