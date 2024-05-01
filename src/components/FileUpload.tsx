@@ -1,21 +1,29 @@
 'use client';
 import { uploadToS3 } from '@/lib/s3';
 import { useMutation } from '@tanstack/react-query';
-import { InboxIcon } from 'lucide-react';
+import { InboxIcon, Loader2 } from 'lucide-react';
 import React from 'react';
 import { useDropzone } from 'react-dropzone';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const FileUpload = () => {
 
-    const { mutate } = useMutation({
+    const [uploading, setUploading] = React.useState(false);
+
+    const { mutate, isLoading } = useMutation({
+
         mutationFn: async ({
             file_key, 
             file_name
-        }: {file_key: string, 
+        }: {
+            file_key: string, 
             file_name: string
         }) => {
-            const response = await axios.post('/api/create-chat', {file_key, file_name});
+            const response = await axios.post("/api/create-chat", {
+                file_key, 
+                file_name
+            });
             return response.data;
         },
     });
@@ -24,31 +32,33 @@ const FileUpload = () => {
         accept: {'application/pdf': [".pdf"] },
         maxFiles: 1,
         onDrop: async (acceptedFiles) => {
-            console.log(acceptedFiles);
             const file = acceptedFiles[0]
             if(file.size > 10 * 1024 * 1024){
                 //bigger than 10MB
-                alert('Please upload a smaller file')
+                toast.error("File too large");
                 return;
             }
 
             try {
+                setUploading(true);
                 const data = await uploadToS3(file);
                 if (!data?.file_key || !data.file_name){
-                    alert("Something went wrong");
+                    toast.error("Something went wrong");
                     return;
                 }
                 mutate(data, {
                     onSuccess: (data) => {
-                        console.log(data);
+                        toast.success(data.message);
                     },
                     onError: (error) => {
-                        console.log(error);
+                        toast.error("Error creating chat");
                     }
                 })
                 console.log("data", data);
             } catch(error) {
                 console.log(error);
+            } finally {
+                setUploading(false);
             }
         }
     });
@@ -60,10 +70,19 @@ const FileUpload = () => {
 
             })}>
                 <input {...getInputProps()}/>
-                <>
-                    <InboxIcon className="w-10 h-10 text-black dark:text-slate-200" />
-                    <p className="mt-2 text-sm dark:text-slate-200 text-slate-500">Drop PDF Here</p>
-                </>
+                {(uploading || isLoading) ? (
+                    <>
+                    <Loader2 className="h-10 w-10 text-black dark:text-white animate-spin"/>
+                    <p className="mt-2 text-sm text-slate-500 dark:text-slate-200">
+                        Sending to GPT...
+                    </p>
+                    </>
+                ) : (
+                    <>
+                        <InboxIcon className="w-10 h-10 text-black dark:text-slate-200" />
+                        <p className="mt-2 text-md dark:text-slate-200 text-slate-500">Drop PDF Here</p>
+                    </>
+            )}
             </div>
         </div>
     )
