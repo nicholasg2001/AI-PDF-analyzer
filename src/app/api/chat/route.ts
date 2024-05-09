@@ -69,5 +69,7 @@ export async function POST(req: Request) {
       },
     });
     return new StreamingTextResponse(stream);
-  } catch (error) {}
+  } catch (error) {
+    return NextResponse.json({ error: 'An error occured while processing the request'} , { status: 500 }); 
+  }
 }

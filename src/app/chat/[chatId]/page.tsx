@@ -42,23 +42,32 @@ const ChatPage = async ({ params : { chatId } }: Props) => {
     const currentChat = _chats.find(chat=> chat.id === cIdToInt);
 
     return (
-        <div className="flex max-h-screen overflow-scroll">
-            <div className="flex w-full max-h-screen overflow-scroll">
-                <div className="flex-[1] max-w-xs">
-                    <ChatSideBar  chats={_chats} chatId={cIdToInt}/>
-                </div>
-
-                
-                <div className="max-h-screen p-4 overflow-scroll flex-[5]">
-                    <PDFViewer pdf_url={currentChat?.pdfUrl || ''}/>
-                </div>
-
-                <div className="flex-[3] border-l-4 border-l-slate-200 dark:border-l-slate-700">
-                    <ChatComponent />
-                </div>
+        <div className="flex flex-col md:flex-row max-h-screen overflow-scroll">
+          <div className="flex md:w-full max-h-screen overflow-scroll">
+            <div className="flex-[1] max-w-xs md:block hidden">
+              <ChatSideBar chats={_chats} chatId={cIdToInt} />
             </div>
+            <div className="max-h-screen p-4 overflow-scroll flex-[4] md:block">
+              <PDFViewer pdf_url={currentChat?.pdfUrl || ''} />
+            </div>
+            <div className="flex-[4] border-l-4 border-l-slate-200 dark:border-l-slate-700 md:block">
+              <ChatComponent chatId={cIdToInt} />
+            </div>
+          </div>
+          {/* Mobile View */}
+          <div className="md:hidden flex flex-col h-screen">
+            <div className="flex-[1] max-h-[20%] overflow-scroll">
+              <ChatSideBar chats={_chats} chatId={cIdToInt} />
+            </div>
+            <div className="flex-[2] max-h-[40%] overflow-scroll">
+              <PDFViewer pdf_url={currentChat?.pdfUrl || ''} />
+            </div>
+            <div className="flex-[3] max-h-[40%] border-t-4 border-t-slate-200 dark:border-t-slate-700 overflow-scroll">
+              <ChatComponent chatId={cIdToInt} />
+            </div>
+          </div>
         </div>
-    )
+      )
 }
 
 export default ChatPage;
