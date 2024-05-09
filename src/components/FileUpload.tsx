@@ -67,10 +67,9 @@ const FileUpload = () => {
         <div className="p-2 bg-white dark:bg-slate-700 rounded-xl">
             <div {...getRootProps({
                 className: 'border-dashed border-2 dark:border-gray-400 rounded-xl cursor-pointer bg-gray-50 dark:bg-slate-600 py-8 flex justify-center items-center flex-col',
-
             })}>
                 <input {...getInputProps()}/>
-                {(uploading || isLoading) ? (
+                {uploading || isLoading ? (
                     <>
                     <Loader2 className="h-10 w-10 text-black dark:text-white animate-spin"/>
                     <p className="mt-2 text-sm text-slate-500 dark:text-slate-200">
