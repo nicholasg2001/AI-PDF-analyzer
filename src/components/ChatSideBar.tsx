@@ -4,7 +4,7 @@ import { DrizzleChat } from '@/lib/db/schema'
 import Link from 'next/link'
 import React from 'react'
 import { Button } from './ui/button'
-import { MessageCircle, PlusCircle } from 'lucide-react'
+import { MessageCircle, PlusCircle, Trash } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import ThemeToggle from './theme-toggle'
 import { UserButton } from '@clerk/nextjs'
@@ -29,9 +29,9 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
             {chats.map(chat => (
                 <Link key={chat.id} href={`/chat/${chat.id}`}>
                     <div className={
-                        cn('rounded-lg p-3 text-black dark:text-slate-200 flex items-center', {
-                            'bg-gray-200 text-black dark:bg-gray-900 dark:text-white': chat.id === chatId,
-                            'hover:text-white': chat.id !== chatId,
+                        cn('rounded-lg p-3 text-gray-800 dark:text-slate-100 flex items-center', {
+                            'bg-gray-200 text-gray-800 dark:bg-gray-900 dark:text-white': chat.id === chatId,
+                            'hover:text-black dark:hover:text-white': chat.id !== chatId,
                         })
                     }>
                         <MessageCircle className="mr-2"/>
