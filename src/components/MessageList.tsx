@@ -1,6 +1,7 @@
 import { cn } from '@/lib/utils';
 import { Message } from 'ai/react'
 import React from 'react'
+import { format } from 'date-fns';
 
 type Props = {
     messages: Message[];
@@ -30,7 +31,7 @@ const MessageList = ({ messages }: Props) => {
                         'text-right': message.role === 'user',
                         'text-left': message.role === 'system',
                         })}>
-                        {message.role === 'user' ? 'You' : 'GPT'}: {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: 'numeric' })}
+                        {message.role === 'user' ? 'You' : 'GPT'}: {format(message.createdAt!, 'cccc h:mm a')}
                     </p>
                 </div>
             );
