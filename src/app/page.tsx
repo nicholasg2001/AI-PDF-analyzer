@@ -22,9 +22,7 @@ export default function Home() {
       </div>
       <div className="flex flex-col md:flex-row justify-center md:justify-between items-center md:items-center h-screen">
         <div className="flex flex-col items-center text-center md:items-center md:ml-36">
-          <div className="flex items-center">
-            <h1 className="mr-3 text-7xl md:whitespace-nowrap font-semibold">PDF Analyzer</h1>
-          </div>
+          <h1 className="mr-3 text-7xl md:whitespace-nowrap font-semibold">PDF Analyzer</h1>
           <div className="flex mt-3">
             {userId && <Button className="h-12 text-xl font-semibold">Go to Files</Button>}
           </div>
