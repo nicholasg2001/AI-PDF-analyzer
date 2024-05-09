@@ -55,9 +55,9 @@ Follow the steps below to install and setup the project:
 
 5. **Setup environment variables**
 
-    Create a `.env` file in the root directory of your project and add the required environment variables.
+    Create a `.env` file in the root directory of your project and add the required environment variables. See `.env.example`
 
-6. **Run the project**
+7. **Run the project**
 
     Now, you can run the project using the following command:
 
