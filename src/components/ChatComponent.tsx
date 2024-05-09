@@ -33,6 +33,16 @@ const ChatComponent = ({ chatId }: Props) => {
     initialMessages: data || [],
   });
 
+  useEffect(() => {
+    const messageContainer = document.getElementById("message-container");
+    if(messageContainer){
+        messageContainer.scrollTo({
+            top: messageContainer.scrollHeight,
+            behavior: "smooth",
+        });
+    }
+  }, [messages])
+
 
 
   return (
