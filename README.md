@@ -51,7 +51,7 @@ Follow the steps below to install and setup the project:
    npm install
    ```
 
-   This will install all the dependencies listed in the `package.json` file, including Next.js, React, React DOM, Axios, Stripe, Tailwind CSS, and other specific dependencies such as "@aws-sdk/client-s3" and "@clerk/nextjs".
+   This will install all the dependencies listed in the `package.json` file, including Next.js, React, React DOM, Axios, Tailwind CSS, and other specific dependencies such as "@aws-sdk/client-s3" and "@clerk/nextjs".
 
 5. **Setup environment variables**
 
