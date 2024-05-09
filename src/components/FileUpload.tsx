@@ -13,7 +13,7 @@ const FileUpload = () => {
     const router = useRouter();
     const [uploading, setUploading] = React.useState(false);
 
-    const { mutate, isLoading } = useMutation({
+    const { mutate, isPending } = useMutation({
 
         mutationFn: async ({
             file_key, 
@@ -74,7 +74,7 @@ const FileUpload = () => {
                 className: 'border-dashed border-4 border-gray-300 dark:border-gray-600 rounded-xl cursor-pointer bg-gray-50 dark:bg-gray-800 py-8 flex justify-center items-center flex-col',
             })}>
                 <input {...getInputProps()}/>
-                {uploading || isLoading ? (
+                {uploading || isPending ? (
                     <>
                     <Loader2 className="h-10 w-10 text-black dark:text-white animate-spin"/>
                     <p className="mt-2 px-24 text-sm text-slate-500 dark:text-slate-200">
