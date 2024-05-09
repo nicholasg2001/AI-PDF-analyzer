@@ -8,6 +8,8 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { Send } from 'lucide-react';
 import { Button } from './ui/button';
+import MessageList from './MessageList';
+
 
 type Props = { chatId: number }
 
@@ -39,16 +41,22 @@ const ChatComponent = ({ chatId }: Props) => {
             <h3 className="text-xl text-black dark:text-gray-200 font-bold">Chat</h3>
         </div>
 
+
+
+        <MessageList messages={messages}/>
+
         <form onSubmit={handleSubmit} className="sticky bottom-0 insert-x-0 px-2 py-4 bg-white dark:bg-gray-600">
-            <Input 
-                value={input} 
-                onChange={handleInputChange} 
-                placeholder="Ask any question..." 
-                className="w-full"
-            />
-            <Button className="bg-gray-100 dark:bg-gray-800 ml-2">
-                <Send className="text-black dark:text-gray-300 h-4 w-4"/>
-            </Button>
+            <div className="flex">
+                <Input 
+                    value={input} 
+                    onChange={handleInputChange} 
+                    placeholder="Ask any question..." 
+                    className="w-full"
+                />
+                <Button className="bg-gray-100 dark:bg-gray-800 ml-2">
+                    <Send className="text-black dark:text-gray-300 h-4 w-4"/>
+                </Button>
+            </div>
         </form>
     </div>
   )
