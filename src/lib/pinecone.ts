@@ -1,7 +1,10 @@
-import { Pinecone } from '@pinecone-database/pinecone';
+import { Pinecone, PineconeRecord } from '@pinecone-database/pinecone';
 import { downloadFromS3 } from './s3-server';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
 import { Document, RecursiveCharacterTextSplitter } from '@pinecone-database/doc-splitter'
+import { getEmbeddings } from './embeddings';
+import md5 from 'md5';
+import { convertToASCII } from './utils';
 
 export const getPineconeClient = () => {
     return new Pinecone({
@@ -37,9 +40,19 @@ export async function loadS3IntoPineCone(file_key: string){
 
 
     //vectorize and embed each document
+    //documents object is a 2d array, so we use .flat()
+    const vectors = await Promise.all(documents.flat().map(embedDocument));
 
-    
-    return pages;
+    //upload to pinecone
+    const client = await getPineconeClient();
+    const pineconeIndex = client.Index('aipdf')
+    console.log('Inserting vectors into pinecone');
+
+    const namespace = pineconeIndex.namespace(convertToASCII(file_key));
+    await namespace.upsert(vectors);
+
+    return documents[0];
+
 }
 
 
@@ -59,7 +72,7 @@ const prepareDocument = async (page: PDFPage) => {
 
     //split each document
     const splitter = new RecursiveCharacterTextSplitter();
-    const docs = await splitter.splitDocuments([
+    const documents = await splitter.splitDocuments([
         new Document({
             pageContent,
             metadata: {
@@ -69,5 +82,30 @@ const prepareDocument = async (page: PDFPage) => {
         })
     ]);
 
-    return docs;
+    return documents;
+}
+
+const embedDocument = async (document: Document) => {
+    
+    try {
+        
+        //convert pageContent in vectors
+        const embeddings = await getEmbeddings(document.pageContent);
+
+        //create id for each vector in pinecone
+        const hash = md5(document.pageContent);
+
+        return {
+            id: hash,
+            values: embeddings,
+            metadata: {
+                text: document.metadata.text,
+                pageNumber: document.metadata.pageNumber
+            }
+        } as PineconeRecord
+
+    } catch (error) {
+        console.log('error embedding document', error);
+        throw error;
+    }
 }
