@@ -4,7 +4,7 @@ import { DrizzleChat } from '@/lib/db/schema'
 import Link from 'next/link'
 import React from 'react'
 import { Button } from './ui/button'
-import { MessageCircle, PlusCircle, Trash } from 'lucide-react'
+import { MessageCircle, PlusCircle, Trash, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import ThemeToggle from './theme-toggle'
 import { UserButton } from '@clerk/nextjs'
@@ -16,7 +16,15 @@ type Props = {
 }
 
 const ChatSideBar = ({ chats, chatId }: Props) => {
-  return (
+
+    const showDeleteToast = () => {
+        
+    }
+
+
+
+
+    return (
     <div className="w-full h-screen p-4 text-black bg-gray-300 dark:bg-gray-800">
         <Link href='/'>
             <Button className="w-full font-semibold bg-gray-400 text-black text-md hover:bg-gray-900 border-dashed border-gray-500 dark:border-black dark:bg-slate-700 dark:hover:bg-slate-900 dark:text-white border">
@@ -27,17 +35,25 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
 
         <div className="flex flex-col gap-2 mt-4">
             {chats.map(chat => (
-                <Link key={chat.id} href={`/chat/${chat.id}`}>
-                    <div className={
-                        cn('rounded-lg p-3 text-gray-800 dark:text-slate-100 flex items-center', {
-                            'bg-gray-200 text-gray-800 dark:bg-gray-900 dark:text-white': chat.id === chatId,
-                            'hover:text-black dark:hover:text-white': chat.id !== chatId,
-                        })
-                    }>
-                        <MessageCircle className="mr-2"/>
-                        <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">{chat.pdfName}</p>
-                    </div>
-                </Link>
+                <div key={chat.id} className="flex flex-row">
+                    <Link key={chat.id} href={`/chat/${chat.id}`}>
+                        <div className={
+                            cn('rounded-lg p-2 text-gray-800 dark:text-slate-100 flex items-center', {
+                                'bg-gray-200 text-gray-800 dark:bg-gray-900 dark:text-white': chat.id === chatId,
+                                'hover:text-black hover:bg-gray-400 dark:hover:text-white dark:hover:bg-gray-700': chat.id !== chatId,
+                            })
+                        }>
+                            <MessageCircle className="mr-2"/>
+                            <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">{chat.pdfName}</p>
+                        </div>
+                    </Link>
+                    <Button 
+                        className="bg-transparent hover:bg-transparent text-black dark:text-white dark:hover:text-red-500"
+                        onClick={showDeleteToast}
+                    >
+                        <Trash2 className="w-5 h-5"/>
+                    </Button>
+                </div>
             ))}
         </div>
 
@@ -51,7 +67,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
             </div>
         </div>
     </div>
-  )
-}
+    )
+    }
 
 export default ChatSideBar;

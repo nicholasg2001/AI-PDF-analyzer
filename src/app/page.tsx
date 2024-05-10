@@ -58,9 +58,9 @@ export default async function Home() {
         </div>
         <div className="overflow-hidden flex-shrink-0 ml-8 md:block">
           {userId ? (
-            <Image src={Scanner} width={1000} height={1000} alt="Scanner" />
+            <Image src={Scanner} width={1000} height={1000} alt="Scanner" priority/>
           ) : (
-            <Image className="mr-48" src={Robot} width={500} height={500} alt="Robot" />
+            <Image className="mr-48" src={Robot} width={500} height={500} alt="Robot" priority/>
           )}
         </div>
       </div>

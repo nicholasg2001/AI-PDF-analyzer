@@ -55,15 +55,15 @@ const ChatComponent = ({ chatId }: Props) => {
 
         <MessageList messages={messages}/>
 
-        <form onSubmit={handleSubmit} className="sticky inset-x-0 px-2 py-4 bg-white dark:bg-gray-600">
+        <form onSubmit={handleSubmit} className="sticky inset-x-0 my-2 px-2 py-4 bg-white dark:bg-gray-600">
             <div className="flex">
                 <Input 
                     value={input} 
                     onChange={handleInputChange} 
                     placeholder="Ask any question..." 
-                    className="w-full"
+                    className="w-full text-black dark:text-gray-200"
                 />
-                <Button className="bg-gray-100 dark:bg-gray-800 ml-2">
+                <Button className="bg-gray-100 dark:hover:bg-gray-900 dark:bg-gray-800 ml-2">
                     <Send className="text-black dark:text-gray-300 h-4 w-4"/>
                 </Button>
             </div>
