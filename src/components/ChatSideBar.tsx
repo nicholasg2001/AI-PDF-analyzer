@@ -8,21 +8,14 @@ import { MessageCircle, PlusCircle, Trash, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import ThemeToggle from './theme-toggle'
 import { UserButton } from '@clerk/nextjs'
+import { ConfirmToast } from 'react-confirm-toast';
 
 type Props = {
     chats: DrizzleChat[],
     chatId: number,
-
 }
 
 const ChatSideBar = ({ chats, chatId }: Props) => {
-
-    const showDeleteToast = () => {
-        
-    }
-
-
-
 
     return (
     <div className="w-full h-screen p-4 text-black bg-gray-300 dark:bg-gray-800">
@@ -47,12 +40,19 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
                             <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">{chat.pdfName}</p>
                         </div>
                     </Link>
-                    <Button 
-                        className="bg-transparent hover:bg-transparent text-black dark:text-white dark:hover:text-red-500"
-                        onClick={showDeleteToast}
+                    <ConfirmToast
+                        asModal={true}
+                        customCancel={'Cancel'}
+                        customConfirm={'Confirm'}
+                        customFunction={() => {}}
+                        message={'Are you sure you want to delete this PDF and all associated chats?'}
+                        showCloseIcon={false}
+                        theme={'snow'}
                     >
-                        <Trash2 className="w-5 h-5"/>
-                    </Button>
+                        <button className="text-black dark:text-gray-200 h-2 w-4 mt-2 pl-1 mr-1 hover:text-red-600 dark:hover:text-red-600">
+                            <Trash2 />
+                        </button>
+                    </ConfirmToast>
                 </div>
             ))}
         </div>

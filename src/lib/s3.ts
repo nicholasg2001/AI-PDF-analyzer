@@ -1,4 +1,4 @@
-import { PutObjectCommandOutput, S3 } from "@aws-sdk/client-s3";
+import { PutObjectCommandOutput, S3, DeleteObjectCommand } from "@aws-sdk/client-s3";
 
 export async function uploadToS3(
   file: File
@@ -34,6 +34,28 @@ export async function uploadToS3(
       reject(error);
     }
   });
+}
+
+export async function deleteFromS3(file_name: string){
+  try {
+    const s3 = new S3({
+      region: "us-east-2",
+      credentials: {
+        accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID!,
+        secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY!,
+      },
+    });
+
+    const params = {
+      Bucket: process.env.NEXT_PUBLIC_S3_BUCKET_NAME!,
+      Key: file_name,
+    };
+    
+    const data = await s3.send(new DeleteObjectCommand(params));
+    console.log("Success. Object deleted.", data);
+  } catch (error) {
+    console.log("Could not delete file from S3", error);
+  }
 }
 
 export function getS3Url(file_key: string) {
