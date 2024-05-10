@@ -2,13 +2,15 @@
 
 import { DrizzleChat } from '@/lib/db/schema'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import { Button } from './ui/button'
-import { MessageCircle, PlusCircle, Trash, Trash2 } from 'lucide-react'
+import { MessageCircle, PlusCircle, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import ThemeToggle from './theme-toggle'
 import { UserButton } from '@clerk/nextjs'
 import { ConfirmToast } from 'react-confirm-toast';
+import axios from 'axios'
+
 
 type Props = {
     chats: DrizzleChat[],
@@ -16,6 +18,27 @@ type Props = {
 }
 
 const ChatSideBar = ({ chats, chatId }: Props) => {
+
+    const [chatList, setChatList] = useState(chats);
+    
+    const deletePDFandChats = async (chat_id: number) => {
+        try {
+            const response = await axios.delete('/api/delete-chat', {
+                data: {
+                    chatId: chat_id,
+                },
+            });
+
+            console.log('Deletion successful', response.data.deleted_pdf);
+
+            setChatList(chats => chats.filter(chat => chat.id !== chat_id));
+        }
+        catch (error) {
+            console.error("Error deleting chat, associated messages, and PDF:", error);
+        }
+    };
+
+
 
     return (
     <div className="w-full h-screen p-4 text-black bg-gray-300 dark:bg-gray-800">
@@ -27,7 +50,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
         </Link>
 
         <div className="flex flex-col gap-2 mt-4">
-            {chats.map(chat => (
+            {chatList.map(chat => (
                 <div key={chat.id} className="flex flex-row">
                     <Link key={chat.id} href={`/chat/${chat.id}`}>
                         <div className={
@@ -44,7 +67,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
                         asModal={true}
                         customCancel={'Cancel'}
                         customConfirm={'Confirm'}
-                        customFunction={() => {}}
+                        customFunction={() => deletePDFandChats(chat.id)}
                         message={'Are you sure you want to delete this PDF and all associated chats?'}
                         showCloseIcon={false}
                         theme={'snow'}
