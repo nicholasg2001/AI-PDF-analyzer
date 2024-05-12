@@ -9,7 +9,6 @@
 - PostgreSQL
 - AWS SDK
 - OpenAI API
-- Stripe
 - Axios
 - Pinecone
 - Drizzle-kit
