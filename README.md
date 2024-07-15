@@ -66,9 +66,4 @@ Follow the steps below to install and setup the project:
 
     Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-# Plans for the future
-### Somethings I'm in the process of learning to implement include:
-- Learning to use the model translate PDF documents them into CSV files.
-- Implement caching with Redis to reduce chats load time and calls to NeonDB.
-- Develop a check system to detect if a user has already uploaded the same PDF twice to reduce redundant storage of the same file.
-- Markup tools to annotate PDFs.
+
