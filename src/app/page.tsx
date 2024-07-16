@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
 import { auth } from "@clerk/nextjs/server";
 import Link from "next/link";
-import { ArrowRight, LogIn } from "lucide-react";
+import { LogIn } from "lucide-react";
 import FileUpload from "@/components/FileUpload";
 import { db } from "@/lib/db";
 import { chats } from "@/lib/db/schema";
@@ -13,7 +13,9 @@ import Scanner from "/public/scanner.png";
 import Robot from "/public/robot.png";
 
 export default async function Home() {
-  const { userId }: { userId: string | null } = auth();
+
+  const { userId } : { userId: string | null } = auth();
+  
   let firstChat;
   if (userId) {
     firstChat = await db.select().from(chats).where(eq(chats.userId, userId));

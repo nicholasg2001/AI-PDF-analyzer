@@ -16,13 +16,14 @@ type Props = {
 
 const ChatPage = async ({ params : { chatId } }: Props) => {
 
-    const { userId } = await auth();
+  const { userId } : { userId: string | null } = auth();
+  
     if (!userId){
         return redirect('/sign-in');
     }
 
     //_chats are the ACTUAL chats returned from db
-    //chats is just the schema
+    //chats is just the table
     const _chats= await db
         .select()
         .from(chats)
