@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { UserButton } from "@clerk/nextjs";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import Link from "next/link";
 import { LogIn } from "lucide-react";
 import FileUpload from "@/components/FileUpload";
@@ -15,7 +15,9 @@ import Robot from "/public/robot.png";
 export default async function Home() {
 
   const { userId } : { userId: string | null } = auth();
-  
+
+  console.log("CURRENT USER ID IS: ", userId);
+
   let firstChat;
   if (userId) {
     firstChat = await db.select().from(chats).where(eq(chats.userId, userId));
@@ -36,7 +38,8 @@ export default async function Home() {
         <div className="flex flex-col items-center text-center md:items-center md:ml-36">
           <h1 className="mr-3 text-7xl md:whitespace-nowrap font-semibold">PDF Analyzer</h1>
           <div className="flex mt-3">
-            {userId && 
+            {/* If firstChat exists, then previous uploads exist, so show user "Go to Files" button */}    
+            {firstChat && 
               <Link href={`/chat/${firstChat!.id}`}>
                 <Button className="h-12 text-xl font-semibold">Go to Files</Button>
               </Link>
