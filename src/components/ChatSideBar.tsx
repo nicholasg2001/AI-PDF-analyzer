@@ -60,7 +60,7 @@ const ChatSideBar = ({ chats, chatId }: Props) => {
                             })
                         }>
                             <MessageCircle className="mr-2"/>
-                            <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">{chat.pdfName}</p>
+                            <p className="w-full overflow-hidden text-sm truncate whitespace-nowrap text-ellipsis">{chat.pdf_name}</p>
                         </div>
                     </Link>
                     <ConfirmToast

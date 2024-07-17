@@ -13,6 +13,7 @@ export const getMatchesFromEmbeddings = async (
     const pineconeIndex = await client.index("aipdf");
     const namespace = pineconeIndex.namespace(convertToASCII(fileKey));
     const queryResult = await namespace.query({
+      //number of query results returned
       topK: 5,
       vector: embeddings,
       includeMetadata: true,

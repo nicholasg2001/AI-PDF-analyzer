@@ -57,6 +57,7 @@ export async function loadS3IntoPinecone(file_key: string){
 
 
 //Make sure each text object in documents are within proper size range
+//Encode to bytes, truncate to correct size, then convert back to string
 export const truncateStringByBytes = (str: string, bytes: number) => {
     const encoder = new TextEncoder();
     return new TextDecoder('utf-8').decode(encoder.encode(str).slice(0, bytes))

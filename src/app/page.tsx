@@ -16,11 +16,9 @@ export default async function Home() {
 
   const { userId } : { userId: string | null } = auth();
 
-  console.log("CURRENT USER ID IS: ", userId);
-
   let firstChat;
   if (userId) {
-    firstChat = await db.select().from(chats).where(eq(chats.userId, userId));
+    firstChat = await db.select().from(chats).where(eq(chats.user_id, userId));
     if (firstChat) {
       firstChat = firstChat[0];
     }

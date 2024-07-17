@@ -6,6 +6,7 @@ import { chats, messages as _messages } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 
+//OpenAI-edge allows streaming response, so message replies are typed to user letter by letter
 export const runtime = "edge";
 
 const config = new Configuration({
@@ -15,12 +16,12 @@ const openai = new OpenAIApi(config);
 
 export async function POST(req: Request) {
   try {
-    const { messages, chatId } = await req.json();
-    const _chats = await db.select().from(chats).where(eq(chats.id, chatId));
+    const { messages, chat_id } = await req.json();
+    const _chats = await db.select().from(chats).where(eq(chats.id, chat_id));
     if (_chats.length != 1) {
       return NextResponse.json({ error: "chat not found" }, { status: 404 });
     }
-    const fileKey = _chats[0].fileKey;
+    const fileKey = _chats[0].file_key;
     const lastMessage = messages[messages.length - 1];
     const context = await getContext(lastMessage.content, fileKey);
 
@@ -53,7 +54,7 @@ export async function POST(req: Request) {
       onStart: async () => {
         // save user message into db
         await db.insert(_messages).values({
-          chatId,
+          chat_id,
           content: lastMessage.content,
           role: "user",
         });
@@ -61,7 +62,7 @@ export async function POST(req: Request) {
       onCompletion: async (completion: any) => {
         // save ai message into db
         await db.insert(_messages).values({
-          chatId,
+          chat_id,
           content: completion,
           role: "system",
         });

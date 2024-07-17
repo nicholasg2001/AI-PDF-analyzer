@@ -13,21 +13,22 @@ export const userSystemEnum = pgEnum('user_system_enum', ['system', 'user'])
 
 export const chats = pgTable('chats', {
     id: serial('id').primaryKey(),
-    pdfName: text('pdf_name').notNull(),
-    pdfUrl: text('pdf_url').notNull(),
-    createdAt: timestamp('created_at').notNull().defaultNow(),
-    userId: varchar('user_id', {length:256}).notNull(),
-    fileKey: text('file_key').notNull(),
+    pdf_name: text('pdf_name').notNull(),
+    pdf_url: text('pdf_url').notNull(),
+    created_at: timestamp('created_at').notNull().defaultNow(),
+    user_id: varchar('user_id', {length:256}).notNull(),
+    file_key: text('file_key').notNull(),
 })
 
+// Create a usable type, DrizzleChat, which models the chats table structure
 export type DrizzleChat = typeof chats.$inferSelect;
 
 export const messages = pgTable('messages', {
     id: serial('id').primaryKey(),
-    chatId: integer('chat_id')
+    chat_id: integer('chat_id')
         .references(() => chats.id)
         .notNull(),
     content: text('content').notNull(),
-    createdAt: timestamp('created_at').notNull().defaultNow(),
+    created_at: timestamp('created_at').notNull().defaultNow(),
     role: userSystemEnum('role').notNull(),
 })
