@@ -18,8 +18,8 @@ const ChatComponent = ({ chatId }: Props) => {
   const { data, isLoading } = useQuery({
     queryKey: ["chat", chatId],
     queryFn: async () => {
-        const response = await axios.post<Message[]>("/api/get-messages", {
-            chatId,
+        const response = await axios.get<Message[]>("/api/get-messages", {
+            params : { chatId },
         });
         return response.data;
     },

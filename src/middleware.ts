@@ -8,3 +8,5 @@ export const config = {
   // except static assets.
   matcher: [ '/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
 };
+
+
