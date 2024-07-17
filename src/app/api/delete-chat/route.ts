@@ -14,12 +14,12 @@ export async function DELETE(req: Request, res: Response) {
   try {
     const body = await req.json();
     const { chatId } = body;
-    const fileName = await db.select({ key: chats.fileKey }).from(chats).where(eq(chats.id, chatId));
+    const fileName = await db.select({ key: chats.file_key }).from(chats).where(eq(chats.id, chatId));
     const chat_id = await db
       .delete(chats)
       .where(eq(chats.id, chatId))
       .returning({
-        deleted_pdf: chats.pdfName,
+        deleted_pdf: chats.pdf_name,
       });
 
     deleteFromS3(fileName[0].key.replace("uploads/", ""))

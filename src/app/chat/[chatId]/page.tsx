@@ -27,7 +27,7 @@ const ChatPage = async ({ params : { chatId } }: Props) => {
     const _chats= await db
         .select()
         .from(chats)
-        .where(eq(chats.userId, userId));
+        .where(eq(chats.user_id, userId));
 
     //there are no chats
     if(!_chats){
@@ -49,7 +49,7 @@ const ChatPage = async ({ params : { chatId } }: Props) => {
               <ChatSideBar chats={_chats} chatId={cIdToInt} />
             </div>
             <div className="max-h-screen p-4 overflow-scroll flex-[4] md:block">
-              <PDFViewer pdf_url={currentChat?.pdfUrl || ''} />
+              <PDFViewer pdf_url={currentChat?.pdf_url || ''} />
             </div>
             <div className="flex-[4] border-l-4 border-l-slate-200 dark:border-l-slate-700 md:block">
               <ChatComponent chatId={cIdToInt} />
@@ -61,7 +61,7 @@ const ChatPage = async ({ params : { chatId } }: Props) => {
               <ChatSideBar chats={_chats} chatId={cIdToInt} />
             </div>
             <div className="flex-[2] max-h-[40%] overflow-scroll">
-              <PDFViewer pdf_url={currentChat?.pdfUrl || ''} />
+              <PDFViewer pdf_url={currentChat?.pdf_url || ''} />
             </div>
             <div className="flex-[3] max-h-[40%] border-t-4 border-t-slate-200 dark:border-t-slate-700 overflow-scroll">
               <ChatComponent chatId={cIdToInt} />
