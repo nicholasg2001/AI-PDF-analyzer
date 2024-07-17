@@ -31,7 +31,7 @@ const MessageList = ({ messages }: Props) => {
                         'text-right': message.role === 'user',
                         'text-left': message.role === 'system',
                         })}>
-                        {message.role === 'user' ? 'You' : 'GPT'}: {format(message.createdAt!, 'cccc h:mm a')}
+                        {message.role === 'user' ? 'You' : 'GPT'}: {format(message.createdAt!, 'MM/dd, h:mm a')}
                     </p>
                 </div>
             );

@@ -1,7 +1,7 @@
 import { Pinecone, PineconeRecord } from '@pinecone-database/pinecone';
 import { downloadFromS3 } from './s3-server';
 import { PDFLoader } from 'langchain/document_loaders/fs/pdf';
-import { Document, RecursiveCharacterTextSplitter } from '@pinecone-database/doc-splitter'
+import { Document, RecursiveCharacterTextSplitter } from '@pinecone-database/doc-splitter';
 import { getEmbeddings } from './embeddings';
 import md5 from 'md5';
 import { convertToASCII } from './utils';
@@ -24,7 +24,7 @@ type PDFPage = {
 export async function loadS3IntoPinecone(file_key: string){
     
     //download and read from pdf
-    console.log('Downloading s3 into file system')
+    console.log('Downloading from s3 into file system')
     const file_name = await downloadFromS3(file_key);
 
     if(!file_name){
