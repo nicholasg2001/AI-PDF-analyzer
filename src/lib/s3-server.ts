@@ -1,5 +1,6 @@
 import { S3 } from "@aws-sdk/client-s3";
 import fs from "fs";
+
 export async function downloadFromS3(file_key: string): Promise<string> {
   return new Promise(async (resolve, reject) => {
     try {
@@ -20,6 +21,8 @@ export async function downloadFromS3(file_key: string): Promise<string> {
 
       if (obj.Body instanceof require("stream").Readable) {
 
+
+        //Node.js streaming pattern
         //open the writable stream and write the file
         const file = fs.createWriteStream(file_name);
         file.on("open", function (fd) {

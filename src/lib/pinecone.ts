@@ -48,7 +48,11 @@ export async function loadS3IntoPinecone(file_key: string){
     const pineconeIndex = client.Index('aipdf')
     console.log('Inserting vectors into pinecone');
 
+
+    //ASCII conversion ensures consistency across all machines and prevents any special characters from causing problems
     const namespace = pineconeIndex.namespace(convertToASCII(file_key));
+
+    //insert or update. If vectors in this namespace already exist, update them, if not, insert them as a new record.
     await namespace.upsert(vectors);
 
     return documents[0];
